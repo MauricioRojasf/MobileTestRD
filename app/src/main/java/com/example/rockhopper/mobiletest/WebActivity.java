@@ -15,7 +15,6 @@ public class WebActivity extends AppCompatActivity {
         String url = getIntent().getStringExtra("url");
         webView = findViewById(R.id.webview);
         Toast.makeText(this,url,Toast.LENGTH_SHORT).show();
-        webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(url);
     }
 }

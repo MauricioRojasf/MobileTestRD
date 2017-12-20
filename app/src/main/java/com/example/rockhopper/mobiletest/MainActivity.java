@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private static  ArrayList <Feed> Feedlist;
     public final static String URLNAME = "url";
 
-    //equestQueue queue = Volley.newRequestQueue(this);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,10 +64,33 @@ public class MainActivity extends AppCompatActivity {
                 Feed feed = (Feed) parent.getItemAtPosition(position);
                 Intent intent = new Intent(MainActivity.this,WebActivity.class);
                 intent.putExtra(URLNAME,feed.getUrl());
-                //Toast.makeText(view.getContext(),feed.getUrl(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(),feed.getUrl(),Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });
+        SwipeDismissListViewTouchListener touchListener =
+                new SwipeDismissListViewTouchListener(
+                        lv,
+                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+
+                                    Feedlist.remove(position);
+                                    //FeedAdapter.notifyDataSetChanged();
+
+                                }
+
+
+                            }
+                        });
+        lv.setOnTouchListener(touchListener);
+
     }
 
     /**
